@@ -1,0 +1,341 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "USAlmanac API",
+    "description": "The Digital Farmer's Almanac & Astronomical AgTech API. Sub-50ms astronomical lunar phases, USDA plant hardiness zones, frost dates, planting-by-the-moon schedules, folklore weather proverbs, and solunar fishing/hunting activity tables.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "USAlmanac Support",
+      "url": "https://usalmanac-api.vercel.app"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://usalmanac-api.vercel.app",
+      "description": "Production Vercel Edge Serverless Gateway"
+    }
+  ],
+  "paths": {
+    "/v1/almanac/daily": {
+      "get": {
+        "summary": "Get Daily Almanac",
+        "description": "Returns full daily almanac data for a specified US ZIP code and date: moon phase, illumination, tropical zodiac sign, fertility status, USDA zone, spring/fall frost dates, gardening rule, and folklore weather proverb.",
+        "operationId": "getDailyAlmanac",
+        "parameters": [
+          {
+            "name": "zip",
+            "in": "query",
+            "description": "5-digit US postal ZIP code (e.g. 45402, 78701, 95814)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "45402"
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Target date in YYYY-MM-DD format (defaults to current date)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "2026-05-15"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Daily almanac record successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAlmanacResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/almanac/best-days": {
+      "get": {
+        "summary": "Get Best Days Calendar",
+        "description": "Generates a monthly calendar of optimal days for 11 homestead and agricultural activities (planting above-ground crops, planting root crops, fishing, setting eggs, pruning to encourage growth, pruning to retard growth, harvesting, canning, brewing, butchering, weeding) based on lunar phase and zodiac sign fertility.",
+        "operationId": "getBestDays",
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "description": "Month number (1-12, defaults to current month)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 5
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "Four-digit year (defaults to current year)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 2026
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Monthly best days schedule successfully generated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BestDaysResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/almanac/crops": {
+      "get": {
+        "summary": "Get Crop Planting Schedule",
+        "description": "Returns a comprehensive planting calendar tailored to a USDA Hardiness Zone or US ZIP code. Includes indoor sowing dates, outdoor transplant dates, moon phase alignment instructions, and beneficial/antagonistic companion plants.",
+        "operationId": "getCropSchedule",
+        "parameters": [
+          {
+            "name": "zip",
+            "in": "query",
+            "description": "5-digit US postal ZIP code",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "45402"
+            }
+          },
+          {
+            "name": "zone",
+            "in": "query",
+            "description": "USDA Hardiness Zone (e.g. 6a, 7b, 8a, 9b)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "crop",
+            "in": "query",
+            "description": "Optional crop filter (e.g. tomato, carrot, lettuce, pepper)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Crop planting schedule successfully retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CropsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/almanac/lunar": {
+      "get": {
+        "summary": "Get Lunar Ephemeris",
+        "description": "Pure astronomical calculation for any date: moon phase name, lunar age, percent illumination, tropical zodiac sign, zodiac element (Water, Earth, Air, Fire), and agricultural fertility rating.",
+        "operationId": "getLunarEphemeris",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Target date in YYYY-MM-DD format (defaults to current date)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "2026-05-15"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lunar ephemeris data successfully calculated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LunarResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/almanac/frost": {
+      "get": {
+        "summary": "Get USDA Hardiness Zone & Frost Dates",
+        "description": "Resolves any US 5-digit ZIP code to its USDA Plant Hardiness Zone, average annual minimum temperature range, median spring last frost date, median fall first frost date, and growing season length.",
+        "operationId": "getFrostDates",
+        "parameters": [
+          {
+            "name": "zip",
+            "in": "query",
+            "description": "5-digit US postal ZIP code (e.g. 45402, 78701, 95814)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "45402"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "USDA zone and frost dates successfully resolved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrostResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/almanac/solunar": {
+      "get": {
+        "summary": "Get Solunar Feeding & Activity Tables",
+        "description": "Calculates major (lunar transit/underfoot) and minor (moonrise/moonset) wildlife and fish feeding activity periods, activity score (0-100), and day star rating based on John Alden Knight solunar theory.",
+        "operationId": "getSolunarTables",
+        "parameters": [
+          {
+            "name": "zip",
+            "in": "query",
+            "description": "5-digit US postal ZIP code",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "45402"
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Target date in YYYY-MM-DD format (defaults to current date)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "2026-05-15"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Solunar wildlife tables successfully calculated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolunarResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DailyAlmanacResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "date": { "type": "string" },
+          "zip": { "type": "string" },
+          "lunar": {
+            "type": "object",
+            "properties": {
+              "phase_name": { "type": "string" },
+              "phase_angle_deg": { "type": "number" },
+              "illumination_percent": { "type": "number" },
+              "moon_age_days": { "type": "number" },
+              "is_waxing": { "type": "boolean" },
+              "zodiac_sign": { "type": "string" },
+              "zodiac_element": { "type": "string" },
+              "zodiac_fertility": { "type": "string" },
+              "emoji": { "type": "string" }
+            }
+          },
+          "hardiness_zone": {
+            "type": "object",
+            "properties": {
+              "zone": { "type": "string" },
+              "avg_extreme_min_f": { "type": "string" },
+              "spring_median_frost": { "type": "string" },
+              "fall_median_frost": { "type": "string" },
+              "growing_season_days": { "type": "integer" }
+            }
+          },
+          "folklore_proverb": { "type": "string" },
+          "gardening_advice": { "type": "string" }
+        }
+      },
+      "BestDaysResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "month": { "type": "integer" },
+          "year": { "type": "integer" },
+          "activities": { "type": "object" }
+        }
+      },
+      "CropsResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "zone": { "type": "string" },
+          "crops": {
+            "type": "array",
+            "items": { "type": "object" }
+          }
+        }
+      },
+      "LunarResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "date": { "type": "string" },
+          "lunar": { "type": "object" }
+        }
+      },
+      "FrostResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "zip": { "type": "string" },
+          "hardiness_zone": { "type": "object" }
+        }
+      },
+      "SolunarResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "date": { "type": "string" },
+          "rating": { "type": "string" },
+          "activity_score": { "type": "integer" },
+          "periods": {
+            "type": "array",
+            "items": { "type": "object" }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "usalmanac-api",
+  "version": "1.0.0",
+  "description": "USAlmanac API - Digital Farmer's Almanac API: Lunar Planting Calendars, USDA Frost Clocks, Solunar Tables & Daily Folklore",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "farmers-almanac",
+    "gardening",
+    "agriculture",
+    "moon-phase",
+    "planting-calendar",
+    "lunar-gardening",
+    "usda-hardiness-zones",
+    "frost-dates",
+    "solunar-tables",
+    "rapidapi"
+  ],
+  "author": "USAlmanac",
+  "license": "UNLICENSED"
+}

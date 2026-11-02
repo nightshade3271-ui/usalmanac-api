@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/v1/almanac/daily", "destination": "/api/daily" },
+    { "source": "/v1/almanac/best-days", "destination": "/api/bestDays" },
+    { "source": "/v1/almanac/lunar", "destination": "/api/lunar" },
+    { "source": "/v1/almanac/frost", "destination": "/api/frost" },
+    { "source": "/v1/almanac/crops", "destination": "/api/crops" },
+    { "source": "/v1/almanac/solunar", "destination": "/api/solunar" },
+    { "source": "/v1/status", "destination": "/api/index" },
+    { "source": "/api/sandbox", "destination": "/api/sandbox" },
+    { "source": "/(.*)", "destination": "/$1" }
+  ]
+}
