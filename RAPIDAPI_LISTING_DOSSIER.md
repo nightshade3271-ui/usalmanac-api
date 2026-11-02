@@ -168,3 +168,4 @@ Set up these 4 tiers in RapidAPI Studio -> **Monetization**:
 In RapidAPI Studio -> **Target URLs**:
 - **Target URL:** `https://usalmanac-api.vercel.app`
 - **Proxy Secret:** Set environment variable `RAPIDAPI_PROXY_SECRET` on Vercel to match RapidAPI's proxy secret for enterprise security.
+

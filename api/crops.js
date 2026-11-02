@@ -41,3 +41,4 @@ module.exports = async (req, res) => {
     res.end(JSON.stringify({ error: 'Crop Schedule Lookup Failed', message: err.message }));
   }
 };
+

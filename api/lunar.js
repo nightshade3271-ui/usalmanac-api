@@ -40,3 +40,4 @@ module.exports = async (req, res) => {
     res.end(JSON.stringify({ error: 'Lunar Lookup Failed', message: err.message }));
   }
 };
+

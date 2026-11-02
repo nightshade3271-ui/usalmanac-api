@@ -41,3 +41,4 @@ module.exports = async (req, res) => {
     res.end(JSON.stringify({ error: 'Frost Lookup Failed', message: err.message }));
   }
 };
+

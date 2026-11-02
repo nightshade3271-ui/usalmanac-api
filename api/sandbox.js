@@ -37,3 +37,4 @@ module.exports = async (req, res) => {
     res.end(JSON.stringify({ error: 'Sandbox Query Failed', message: err.message }));
   }
 };
+

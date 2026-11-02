@@ -29,3 +29,4 @@ module.exports = async (req, res) => {
     marketplace: 'https://rapidapi.com'
   }, null, 2));
 };
+

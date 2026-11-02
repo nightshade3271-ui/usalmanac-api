@@ -84,3 +84,4 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log(`🚀 USAlmanac API Server running at http://localhost:${PORT}`);
 });
+

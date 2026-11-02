@@ -41,3 +41,4 @@ module.exports = async (req, res) => {
     res.end(JSON.stringify({ error: 'Daily Almanac Lookup Failed', message: err.message }));
   }
 };
+

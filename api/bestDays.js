@@ -40,3 +40,4 @@ module.exports = async (req, res) => {
     res.end(JSON.stringify({ error: 'Best Days Lookup Failed', message: err.message }));
   }
 };
+
